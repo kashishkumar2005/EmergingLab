@@ -1,18 +1,15 @@
 # AI-Driven Air Quality Insight Confidence Dashboard
 
-> A confidence-aware analytics system that evaluates the reliability of air quality data and explains insights using Machine Learning and Large Language Models.
 
----
 
-## 📖 Overview
+## Overview
 
 This project presents an **AI-assisted analytics dashboard** that goes beyond traditional air quality visualization by **assessing data quality**, **assigning confidence levels to insights**, and **generating human-readable explanations** using a Large Language Model (LLM).
 
 The system helps users understand not only *what* the air quality trends are, but also *how reliable* those trends are.
 
----
 
-## 🎯 Key Objectives
+## Key Objectives
 
 * Analyze real-world air quality datasets
 * Detect and quantify data quality issues using ML techniques
@@ -20,9 +17,8 @@ The system helps users understand not only *what* the air quality trends are, bu
 * Visualize trends using interactive dashboards
 * Explain insight reliability using an LLM (Hugging Face API)
 
----
 
-## 🌍 Dataset
+##  Dataset
 
 * **Name:** Air Quality Data in India
 * **Source:** Government Open Data / Kaggle (CPCB)
@@ -39,9 +35,9 @@ The system helps users understand not only *what* the air quality trends are, bu
 * CO
 * AQI
 
----
 
-## 🏗️ Architecture
+
+## Architecture
 
 ```text
 Dataset
@@ -51,9 +47,7 @@ Dataset
                              └──▶ LLM-Based Explanations
 ```
 
----
-
-## ⚙️ Methodology
+##  Methodology
 
 ### 1. Data Ingestion
 
@@ -90,9 +84,9 @@ Dataset
 * Integrate Hugging Face Inference API
 * Generate plain-language explanations for data reliability and insight confidence
 
----
 
-## ✨ Features
+
+##  Features
 
 * Real-world environmental dataset
 * ML-driven data quality assessment
@@ -101,27 +95,26 @@ Dataset
 * AI-generated explanations
 * Focus on ethical and trustworthy analytics
 
----
 
-## 🛠️ Tech Stack
+
+## Tech Stack
 
 * **Language:** Python
 * **ML & Analysis:** Pandas, NumPy
 * **LLM:** Hugging Face Inference API
 * **Visualization:** Power BI / Tableau
 
----
 
-## 📦 Deliverables
+
+## Deliverables
 
 * Interactive Power BI / Tableau dashboard
 * Data quality analysis scripts
 * LLM integration module
 * Project report and demo presentation
 
----
 
-## 🎓 Learning Outcomes
+##  Learning Outcomes
 
 * Practical integration of pre-trained LLMs
 * Application of ML techniques to real-world data
@@ -129,25 +122,22 @@ Dataset
 * Understanding of data reliability and ethical AI
 * Exposure to emerging analytics technologies
 
----
 
-## 🚀 Future Enhancements
+## Future Enhancements
 
 * AQI forecasting with confidence explanations
 * Real-time data ingestion
 * Automated alert generation
 * Web-based deployment
 
----
 
-## 🧑‍🎓 Academic Context
+## Academic Context
 
 * **Course:** Emerging Labs
 * **Semester:** VI
 * **Domain:** AI, ML, Data Analytics
 
----
 
-## 📌 Conclusion
+## Conclusion
 
 This project demonstrates how **trust, transparency, and explainability** can be integrated into analytical systems, enabling users to make informed decisions based on **confidence-aware air quality insights**.
