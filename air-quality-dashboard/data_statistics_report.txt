@@ -1,0 +1,140 @@
+================================================================================
+AIR QUALITY DATA - DETAILED STATISTICS REPORT
+================================================================================
+
+Generated: 2026-01-29 20:28:08
+
+--- DATASET OVERVIEW ---
+Total Records: 435,742
+Total Features: 16
+Date Range: 1987-01-01 00:00:00 to 2015-12-31 00:00:00
+Duration: 28.0 years
+
+--- GEOGRAPHICAL COVERAGE ---
+Total States: 37
+Total Cities: 304
+Total Monitoring Stations: 991
+
+Top 10 States by Record Count:
+   1. Maharashtra                   :  60,384 records (13.86%)
+   2. Uttar Pradesh                 :  42,816 records ( 9.83%)
+   3. Andhra Pradesh                :  26,368 records ( 6.05%)
+   4. Punjab                        :  25,634 records ( 5.88%)
+   5. Rajasthan                     :  25,589 records ( 5.87%)
+   6. Kerala                        :  24,728 records ( 5.67%)
+   7. Himachal Pradesh              :  22,896 records ( 5.25%)
+   8. West Bengal                   :  22,463 records ( 5.16%)
+   9. Gujarat                       :  21,279 records ( 4.88%)
+  10. Tamil Nadu                    :  20,597 records ( 4.73%)
+
+Top 10 Cities by Record Count:
+   1. Guwahati                      :   9,984 records ( 2.29%)
+   2. Hyderabad                     :   9,667 records ( 2.22%)
+   3. Delhi                         :   8,551 records ( 1.96%)
+   4. Chandigarh                    :   8,520 records ( 1.96%)
+   5. Jaipur                        :   7,850 records ( 1.80%)
+   6. Nagpur                        :   7,829 records ( 1.80%)
+   7. Kolkata                       :   7,733 records ( 1.77%)
+   8. Kanpur                        :   7,545 records ( 1.73%)
+   9. Agra                          :   7,306 records ( 1.68%)
+  10. Kochi                         :   7,263 records ( 1.67%)
+
+--- TEMPORAL ANALYSIS ---
+Average records per year: 15,025
+Peak year: 2015.0 (50,319 records)
+Lowest year: 1987.0 (428 records)
+
+--- POLLUTANT STATISTICS ---
+
+SO2:
+  Total Measurements: 401,096
+  Mean: 10.83 µg/m³
+  Median: 8.00 µg/m³
+  Std Dev: 11.18 µg/m³
+  Min: 0.00 µg/m³
+  Max: 909.00 µg/m³
+  25th Percentile: 5.00 µg/m³
+  75th Percentile: 13.70 µg/m³
+  95th Percentile: 28.00 µg/m³
+  99th Percentile: 49.00 µg/m³
+
+NO2:
+  Total Measurements: 419,509
+  Mean: 25.81 µg/m³
+  Median: 22.00 µg/m³
+  Std Dev: 18.50 µg/m³
+  Min: 0.00 µg/m³
+  Max: 876.00 µg/m³
+  25th Percentile: 14.00 µg/m³
+  75th Percentile: 32.20 µg/m³
+  95th Percentile: 58.00 µg/m³
+  99th Percentile: 93.50 µg/m³
+
+PM2.5:
+  Total Measurements: 9,314
+  Mean: 40.79 µg/m³
+  Median: 32.00 µg/m³
+  Std Dev: 30.83 µg/m³
+  Min: 3.00 µg/m³
+  Max: 504.00 µg/m³
+  25th Percentile: 24.00 µg/m³
+  75th Percentile: 46.00 µg/m³
+  95th Percentile: 96.00 µg/m³
+  99th Percentile: 158.00 µg/m³
+
+RSPM:
+  Total Measurements: 395,520
+  Mean: 108.83 µg/m³
+  Median: 90.00 µg/m³
+  Std Dev: 74.87 µg/m³
+  Min: 0.00 µg/m³
+  Max: 6307.03 µg/m³
+  25th Percentile: 56.00 µg/m³
+  75th Percentile: 142.00 µg/m³
+  95th Percentile: 249.00 µg/m³
+  99th Percentile: 360.67 µg/m³
+
+SPM:
+  Total Measurements: 198,355
+  Mean: 220.78 µg/m³
+  Median: 187.00 µg/m³
+  Std Dev: 151.40 µg/m³
+  Min: 0.00 µg/m³
+  Max: 3380.00 µg/m³
+  25th Percentile: 111.00 µg/m³
+  75th Percentile: 296.00 µg/m³
+  95th Percentile: 504.00 µg/m³
+  99th Percentile: 713.00 µg/m³
+
+--- DATA QUALITY INDICATORS ---
+Total Missing Values: 1,081,392
+Overall Completeness: 84.49%
+
+Missing Data by Column:
+  PM2.5                         : 426,428 (97.86%)
+  SPM                           : 237,387 (54.48%)
+  monitoring_agency             : 149,481 (34.30%)
+  station_code                  : 144,077 (33.06%)
+  RSPM                          :  40,222 ( 9.23%)
+  SO2                           :  34,646 ( 7.95%)
+  monitoring_station            :  27,491 ( 6.31%)
+  NO2                           :  16,233 ( 3.73%)
+  area_type                     :   5,393 ( 1.24%)
+  date                          :       7 ( 0.00%)
+  month                         :       7 ( 0.00%)
+  year                          :       7 ( 0.00%)
+  month_name                    :       7 ( 0.00%)
+  sampling_date_text            :       3 ( 0.00%)
+  city                          :       3 ( 0.00%)
+
+--- AREA TYPE DISTRIBUTION ---
+  Residential, Rural and other Areas                : 179,014 (41.08%)
+  Industrial Area                                   : 96,091 (22.05%)
+  Residential and others                            : 86,791 (19.92%)
+  Industrial Areas                                  : 51,747 (11.88%)
+  Sensitive Area                                    :  8,980 ( 2.06%)
+  Sensitive Areas                                   :  5,536 ( 1.27%)
+  RIRUO                                             :  1,304 ( 0.30%)
+  Sensitive                                         :    495 ( 0.11%)
+  Industrial                                        :    233 ( 0.05%)
+  Residential                                       :    158 ( 0.04%)
