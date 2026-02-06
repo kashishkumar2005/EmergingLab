@@ -1,0 +1,51 @@
+================================================================================
+DATA QUALITY STATISTICS SUMMARY
+================================================================================
+
+Generated: 2026-02-06 09:29:44
+
+--- QUALITY SCORE STATISTICS ---
+Mean: 85.12
+Median: 88.24
+Std Dev: 5.93
+Min: 11.76
+Max: 94.12
+25th Percentile: 82.35
+75th Percentile: 88.24
+
+--- CONFIDENCE DISTRIBUTION ---
+Medium: 387,541 (88.94%)
+High: 45,397 (10.42%)
+Low: 2,804 (0.64%)
+
+--- OUTLIER SUMMARY ---
+Total records with outliers: 17,562
+Average outliers per record: 0.05
+
+--- MISSING DATA SUMMARY ---
+Average missing percentage per record: 14.60%
+Records with >50% missing: 3
+
+--- TOP 10 HIGHEST QUALITY CITIES ---
+ 1. ANKLESHWAR                    : 94.12
+ 2. Bhuj                          : 94.12
+ 3. Cuncolim                      : 94.12
+ 4. Keonjhar                      : 94.12
+ 5. MORBI                         : 94.12
+ 6. SANAND                        : 94.12
+ 7. Sarigam                       : 94.12
+ 8. VAPI                          : 94.12
+ 9. Bicholim                      : 93.96
+10. Codli                         : 93.96
+
+--- TOP 10 LOWEST QUALITY CITIES ---
+ 1. Noida, Ghaziabad              : 63.03
+ 2. Baruipur                      : 64.71
+ 3. Gajroula                      : 71.36
+ 4. Nalco                         : 72.06
+ 5. Khajuraho                     : 73.16
+ 6. Nahan                         : 74.18
+ 7. Trivendrum                    : 74.71
+ 8. Greater Mumbai                : 74.75
+ 9. Chandarpur                    : 74.96
+10. Bombay                        : 75.13

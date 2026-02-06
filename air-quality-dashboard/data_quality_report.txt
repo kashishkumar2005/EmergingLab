@@ -1,0 +1,59 @@
+================================================================================
+DATA QUALITY EVALUATION REPORT
+================================================================================
+
+Generated: 2026-02-06 09:27:50
+
+--- DATASET OVERVIEW ---
+Total Records: 435,742
+Total Features: 33
+
+--- MISSING VALUES ---
+Total Missing Cells: 1,081,392
+Missing Percentage: 13.79%
+
+--- OUTLIERS (Z-Score Method) ---
+SO2: 5,198 outliers
+NO2: 6,908 outliers
+PM2.5: 175 outliers
+RSPM: 5,754 outliers
+SPM: 2,556 outliers
+
+--- INVALID VALUES ---
+SO2:
+  Negative values: 0
+  Zero values: 875
+NO2:
+  Negative values: 0
+  Zero values: 785
+PM2.5:
+  Negative values: 0
+  Zero values: 0
+RSPM:
+  Negative values: 0
+  Zero values: 766
+SPM:
+  Negative values: 0
+  Zero values: 1,213
+
+--- DUPLICATES ---
+Exact duplicates: 674
+Key-based duplicates: 68,602
+
+--- CONSISTENCY ---
+Consistency issues found: 125
+
+--- QUALITY SCORES ---
+Average Score: 85.12/100
+Median Score: 88.24/100
+Min Score: 11.76/100
+Max Score: 94.12/100
+
+--- CONFIDENCE LEVELS ---
+Medium: 387,541 (88.94%)
+High: 45,397 (10.42%)
+Low: 2,804 (0.64%)
+
+--- OUTPUT FILES ---
+Data with quality scores: data_with_quality_scores.csv
+Quality report: data_quality_report.txt
