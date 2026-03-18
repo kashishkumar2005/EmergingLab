@@ -1,0 +1,97 @@
+================================================================================
+DASHBOARD DATA GUIDE
+================================================================================
+
+Generated: 2026-03-18 17:26:45
+
+--- AVAILABLE DATASETS ---
+
+1. city_summary.csv
+   Purpose: City-level aggregated metrics
+   Use for: City comparison charts, ranking tables
+   Records: 304
+   Key columns: city, quality_score_mean, total_measurements,
+                pollutant averages, confidence percentages
+
+2. time_series.csv
+   Purpose: Temporal trends and patterns
+   Use for: Line charts, trend analysis, time-based filtering
+   Records: 346
+   Key columns: year, month, date, quality_score,
+                pollutant averages, confidence counts
+
+3. confidence_distribution.csv
+   Purpose: Confidence level breakdown by city
+   Use for: Stacked bar charts, confidence heat maps
+   Records: 304
+   Key columns: city, High, Medium, Low counts,
+                high_pct, medium_pct, low_pct
+
+4. outlier_summary.csv
+   Purpose: Outlier statistics by pollutant
+   Use for: Quality issue visualization, data reliability charts
+   Records: 5
+   Key columns: pollutant, total_measurements,
+                outlier_count, outlier_percentage
+
+5. sampled_data.csv
+   Purpose: 10% sample for faster dashboard loading
+   Use for: Interactive maps, detailed drill-down views
+   Records: 43,574
+   Note: Maintains confidence level distribution
+
+6. data_with_quality_scores.csv (Full dataset)
+   Purpose: Complete data with all quality metrics
+   Use for: Detailed analysis, custom calculations
+   Records: 435,742
+   Warning: Large file, may slow dashboard performance
+
+================================================================================
+RECOMMENDED DASHBOARD VISUALS
+================================================================================
+
+1. Overview Page:
+   - KPI Cards: Total measurements, avg quality score, high confidence %
+   - Quality Score Distribution (histogram from sampled_data.csv)
+   - Confidence Level Pie Chart (from confidence_distribution.csv)
+   - Geographic Map (from city_summary.csv)
+
+2. Time Trends Page:
+   - Quality Score Over Time (line chart from time_series.csv)
+   - Confidence Distribution Over Time (stacked area from time_series.csv)
+   - Pollutant Trends (multiple lines from time_series.csv)
+
+3. City Analysis Page:
+   - City Ranking Table (from city_summary.csv)
+   - Top 10 Cities Bar Chart (from city_summary.csv)
+   - City Confidence Heat Map (from confidence_distribution.csv)
+
+4. Data Quality Page:
+   - Outlier Analysis Chart (from outlier_summary.csv)
+   - Missing Data Metrics (from city_summary.csv)
+   - Quality vs Completeness Scatter (from sampled_data.csv)
+
+================================================================================
+POWER BI / TABLEAU TIPS
+================================================================================
+
+Power BI:
+  1. Import all CSV files from dashboard_data/ folder
+  2. Create relationships between tables using 'city' field
+  3. Use sampled_data.csv for map visuals to improve performance
+  4. Create calculated columns for custom metrics
+  5. Use slicers for year, city, and confidence level filtering
+
+Tableau:
+  1. Connect to dashboard_data/ folder as data source
+  2. Use data blending to combine datasets
+  3. Create parameters for dynamic filtering
+  4. Use LOD expressions for advanced calculations
+  5. Design dashboard with multiple sheets and filters
+
+Color Scheme Recommendations:
+  - High Confidence: Green (#2ecc71)
+  - Medium Confidence: Orange (#f39c12)
+  - Low Confidence: Red (#e74c3c)
+  - Quality Score: Gradient from Red (0) to Green (100)
+

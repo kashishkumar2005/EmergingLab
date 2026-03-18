@@ -1,0 +1,61 @@
+{
+  "generated_at": "2026-03-18 17:39:17",
+  "api_provider": "Groq",
+  "model": "mixtral-8x7b-32768",
+  "sample_explanations": [
+    {
+      "label": "High Confidence Example",
+      "city": "Hyderabad",
+      "date": "2004-02-01 00:00:00",
+      "quality_score": 94.12,
+      "confidence_level": "High",
+      "missing_percentage": 5.88,
+      "outlier_count": 0,
+      "explanation": "This air quality measurement has excellent data quality (score: 94.1/100). The data is highly reliable with minimal issues, making it suitable for detailed analysis and regulatory compliance. Minimal missing data (5.9%). Recommended for: regulatory compliance, health advisories, and predictive modeling."
+    },
+    {
+      "label": "Medium Confidence Example",
+      "city": "Hyderabad",
+      "date": "1990-02-01 00:00:00",
+      "quality_score": 70.59,
+      "confidence_level": "Medium",
+      "missing_percentage": 29.41,
+      "outlier_count": 0,
+      "explanation": "This air quality measurement has fair data quality (score: 70.6/100). The data has moderate reliability with some quality concerns, suitable for general trend analysis. Some data points missing (29.4%). Recommended for: general monitoring and trend observation."
+    },
+    {
+      "label": "Low Confidence Example",
+      "city": "Vishakhapatnam",
+      "date": "1992-05-01 00:00:00",
+      "quality_score": 64.71000000000001,
+      "confidence_level": "Low",
+      "missing_percentage": 35.29,
+      "outlier_count": 0,
+      "explanation": "This air quality measurement has poor data quality (score: 64.7/100). The data has low reliability with significant quality issues, recommended for exploratory analysis only. Significant missing data (35.3%) reduces reliability. Use for data exploration only."
+    },
+    {
+      "label": "Best Quality Example",
+      "city": "Hyderabad",
+      "date": "2004-02-01 00:00:00",
+      "quality_score": 94.12,
+      "confidence_level": "High",
+      "missing_percentage": 5.88,
+      "outlier_count": 0,
+      "explanation": "This air quality measurement has excellent data quality (score: 94.1/100). The data is highly reliable with minimal issues, making it suitable for detailed analysis and regulatory compliance. Minimal missing data (5.9%). Recommended for: regulatory compliance, health advisories, and predictive modeling."
+    },
+    {
+      "label": "Worst Quality Example",
+      "city": NaN,
+      "date": "NaT",
+      "quality_score": 11.760000000000003,
+      "confidence_level": "Low",
+      "missing_percentage": 88.24,
+      "outlier_count": 0,
+      "explanation": "This air quality measurement has very poor data quality (score: 11.8/100). The data has low reliability with significant quality issues, recommended for exploratory analysis only. Significant missing data (88.2%) reduces reliability. Use for data exploration only."
+    }
+  ],
+  "metadata": {
+    "total_records": 435742,
+    "method": "AI-powered"
+  }
+}

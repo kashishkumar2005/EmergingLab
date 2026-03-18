@@ -1,0 +1,142 @@
+================================================================================
+AI-DRIVEN AIR QUALITY INSIGHT EXPLANATIONS
+================================================================================
+
+Generated: 2026-03-18 17:39:17
+AI Provider: Groq (Mixtral-8x7B)
+Method: AI-powered explanations
+
+================================================================================
+OVERALL DATASET INSIGHTS
+================================================================================
+
+This air quality dataset contains 435,742 measurements.
+
+Quality Assessment: Average score 85.1/100 (median 88.2/100).
+
+Confidence Distribution:
+- High Confidence: 10.4% (highly reliable, suitable for regulatory use)
+- Medium Confidence: 88.9% (moderate reliability, good for trends)
+- Low Confidence: 0.6% (exploratory use only)
+
+Recommendation: Prioritize high and medium confidence measurements for decision-making. 
+Low confidence data should be flagged for verification or re-collection.
+
+================================================================================
+SAMPLE MEASUREMENT EXPLANATIONS (AI-GENERATED)
+================================================================================
+
+[High Confidence Example]
+--------------------------------------------------------------------------------
+Location: Hyderabad
+Date: 2004-02-01 00:00:00
+Quality Score: 94.1/100
+Confidence Level: High
+Missing Data: 5.9%
+Outliers: 0
+
+AI Explanation:
+This air quality measurement has excellent data quality (score: 94.1/100). The data is highly reliable with minimal issues, making it suitable for detailed analysis and regulatory compliance. Minimal missing data (5.9%). Recommended for: regulatory compliance, health advisories, and predictive modeling.
+
+[Medium Confidence Example]
+--------------------------------------------------------------------------------
+Location: Hyderabad
+Date: 1990-02-01 00:00:00
+Quality Score: 70.6/100
+Confidence Level: Medium
+Missing Data: 29.4%
+Outliers: 0
+
+AI Explanation:
+This air quality measurement has fair data quality (score: 70.6/100). The data has moderate reliability with some quality concerns, suitable for general trend analysis. Some data points missing (29.4%). Recommended for: general monitoring and trend observation.
+
+[Low Confidence Example]
+--------------------------------------------------------------------------------
+Location: Vishakhapatnam
+Date: 1992-05-01 00:00:00
+Quality Score: 64.7/100
+Confidence Level: Low
+Missing Data: 35.3%
+Outliers: 0
+
+AI Explanation:
+This air quality measurement has poor data quality (score: 64.7/100). The data has low reliability with significant quality issues, recommended for exploratory analysis only. Significant missing data (35.3%) reduces reliability. Use for data exploration only.
+
+[Best Quality Example]
+--------------------------------------------------------------------------------
+Location: Hyderabad
+Date: 2004-02-01 00:00:00
+Quality Score: 94.1/100
+Confidence Level: High
+Missing Data: 5.9%
+Outliers: 0
+
+AI Explanation:
+This air quality measurement has excellent data quality (score: 94.1/100). The data is highly reliable with minimal issues, making it suitable for detailed analysis and regulatory compliance. Minimal missing data (5.9%). Recommended for: regulatory compliance, health advisories, and predictive modeling.
+
+[Worst Quality Example]
+--------------------------------------------------------------------------------
+Location: nan
+Date: NaT
+Quality Score: 11.8/100
+Confidence Level: Low
+Missing Data: 88.2%
+Outliers: 0
+
+AI Explanation:
+This air quality measurement has very poor data quality (score: 11.8/100). The data has low reliability with significant quality issues, recommended for exploratory analysis only. Significant missing data (88.2%) reduces reliability. Use for data exploration only.
+
+================================================================================
+TOP 10 CITIES BY MONITORING ACTIVITY
+================================================================================
+
+ 1. Guwahati
+    Total Measurements: 9,984
+    Average Quality Score: 85.7/100
+    High Confidence: 0.0%
+
+ 2. Hyderabad
+    Total Measurements: 9,667
+    Average Quality Score: 85.0/100
+    High Confidence: 10.8%
+
+ 3. Delhi
+    Total Measurements: 8,551
+    Average Quality Score: 82.2/100
+    High Confidence: 3.3%
+
+ 4. Chandigarh
+    Total Measurements: 8,520
+    Average Quality Score: 82.6/100
+    High Confidence: 11.0%
+
+ 5. Jaipur
+    Total Measurements: 7,850
+    Average Quality Score: 84.9/100
+    High Confidence: 10.7%
+
+ 6. Nagpur
+    Total Measurements: 7,829
+    Average Quality Score: 84.4/100
+    High Confidence: 9.6%
+
+ 7. Kolkata
+    Total Measurements: 7,733
+    Average Quality Score: 84.8/100
+    High Confidence: 12.0%
+
+ 8. Kanpur
+    Total Measurements: 7,545
+    Average Quality Score: 84.9/100
+    High Confidence: 10.6%
+
+ 9. Agra
+    Total Measurements: 7,306
+    Average Quality Score: 83.3/100
+    High Confidence: 3.1%
+
+10. Kochi
+    Total Measurements: 7,263
+    Average Quality Score: 85.5/100
+    High Confidence: 10.3%
+
