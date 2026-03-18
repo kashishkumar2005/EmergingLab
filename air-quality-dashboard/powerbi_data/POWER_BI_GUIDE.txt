@@ -1,0 +1,95 @@
+
+POWER BI IMPORT GUIDE — Air Quality Insight Confidence Dashboard
+Generated: 2026-03-17 16:42
+=================================================================
+
+FILES TO IMPORT INTO POWER BI
+==============================
+1. city_summary.csv           → City-level quality overview table
+2. time_series_annual.csv     → Annual trend line charts
+3. confidence_totals.csv      → Donut / pie chart for confidence
+4. confidence_by_state.csv    → State-level confidence breakdown (map/bar)
+5. pollutant_stats.csv        → Pollutant statistics table
+6. quality_score_distribution.csv → Histogram / score bins
+7. sampled_data_10pct.csv     → Full detail (10% sample for performance)
+
+RECOMMENDED POWER BI VISUALS
+==============================
+Visual 1  → KPI Cards (5 cards)
+  • Total Records:    COUNT(sampled_data[city])
+  • High Confidence:  COUNTIF confidence_level = "High"
+  • Medium Conf.:     COUNTIF confidence_level = "Medium"
+  • Low Confidence:   COUNTIF confidence_level = "Low"
+  • Avg Quality:      AVERAGE(sampled_data[quality_score])
+
+Visual 2  → Line Chart: Quality Over Time
+  • X-axis: time_series_annual[year]
+  • Y-axis: time_series_annual[avg_quality_score]
+  • Trend line: ON
+
+Visual 3  → Donut Chart: Confidence Distribution
+  • Values: confidence_totals[count]
+  • Legend: confidence_totals[confidence_level]
+  • Colors: High=Green, Medium=Yellow, Low=Red
+
+Visual 4  → Map / Filled Map: State Quality
+  • Location: confidence_by_state[state]
+  • Color saturation: high_pct
+
+Visual 5  → Clustered Bar: Top 20 Cities by Score
+  • Y-axis: city_summary[city]
+  • X-axis: city_summary[quality_score_mean]
+  • Color: city_summary[confidence_level]
+
+Visual 6  → Stacked Bar: Outliers by Pollutant
+  • X-axis: pollutant_stats[pollutant]
+  • Y-axis: pollutant_stats[outlier_pct]
+
+Visual 7  → Histogram (Column Chart): Score Distribution
+  • X-axis: quality_score_distribution[score_range]
+  • Y-axis: quality_score_distribution[count]
+
+Visual 8  → Table: City Confidence Details
+  • Columns: rank, city, state, quality_score_mean, confidence_level
+
+RELATIONSHIPS
+=============
+sampled_data[city] → city_summary[city]
+sampled_data[year] → time_series_annual[year]
+sampled_data[confidence_level] → confidence_totals[confidence_level]
+
+COLOR THEME
+===========
+High Confidence:   #22D3A5  (green)
+Medium Confidence: #F59E0B  (amber)
+Low Confidence:    #EF4444  (red)
+SO2 line:          #00E5FF  (cyan)
+NO2 line:          #7C3AED  (purple)
+RSPM line:         #FF6B35  (orange)
+SPM line:          #F59E0B  (amber)
+
+SLICERS / FILTERS
+=================
+• Slicer 1: State (from city_summary[state])
+• Slicer 2: Confidence Level (High / Medium / Low)
+• Slicer 3: Year range (from time_series_annual[year])
+• Slicer 4: Pollutant type
+
+MEASURES TO CREATE (DAX)
+=========================
+High Confidence % = 
+  DIVIDE(
+    COUNTROWS(FILTER(sampled_data, sampled_data[confidence_level] = "High")),
+    COUNTROWS(sampled_data)
+  ) * 100
+
+Avg Quality = AVERAGE(sampled_data[quality_score])
+
+Outlier Records = SUMX(sampled_data, sampled_data[outlier_count])
+
+TIPS
+====
+• Use sampled_data_10pct.csv for detailed visuals (faster in Power BI)
+• Use city_summary.csv for aggregate/map visuals (smaller file, complete)
+• Sort confidence_level column: High=1, Medium=2, Low=3
+• Set quality_score color scale: Red(0) → Yellow(50) → Green(100)
