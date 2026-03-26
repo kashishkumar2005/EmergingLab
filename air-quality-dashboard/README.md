@@ -81,7 +81,7 @@ Dataset
 
 ### 6. LLM Integration
 
-* Integrate Hugging Face Inference API
+* Integrate Groq API
 * Generate plain-language explanations for data reliability and insight confidence
 
 
