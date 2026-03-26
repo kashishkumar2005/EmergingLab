@@ -43,8 +43,8 @@ The system helps users understand not only *what* the air quality trends are, bu
 Dataset
   └──▶ Data Quality Analysis (ML)
            └──▶ Quality Metrics & Confidence Scores
-                    └──▶ Interactive Dashboard (Power BI / Tableau)
-                             └──▶ LLM-Based Explanations
+                    └──▶LLM-Based Explanations 
+                             └──▶ Interactive Dashboard (Power BI / Tableau)
 ```
 
 ##  Methodology
