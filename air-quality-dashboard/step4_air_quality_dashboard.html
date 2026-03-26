@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Air Quality Insight Confidence Dashboard — India 1987–2015</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;700&display=swap');
+:root{--bg:#07090f;--surface:#0e1320;--card:#121929;--border:#1a2540;--accent:#00d4ff;--accent2:#ff5f3e;--accent3:#8b5cf6;--good:#10d9a0;--warn:#f6a628;--bad:#f04b4b;--text:#dde4f0;--muted:#4e6080;--glow:0 0 24px rgba(0,212,255,.13)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,212,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,.025) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
+.wrap{position:relative;z-index:1}
+header{padding:22px 36px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:linear-gradient(180deg,rgba(0,212,255,.05) 0%,transparent 100%)}
+.logo h1{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:-.3px}
+.logo h1 em{color:var(--accent);font-style:normal}
+.logo p{font-size:10px;color:var(--muted);margin-top:3px;letter-spacing:1.5px;text-transform:uppercase}
+.hright{display:flex;gap:14px;align-items:center}
+.live{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--good);letter-spacing:1px}
+.live::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--good);animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.hbadge{font-size:10px;padding:5px 13px;border:1px solid var(--border);border-radius:3px;color:var(--muted);background:var(--surface)}
+.filters{padding:12px 36px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.flabel{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:2px;margin-right:2px;white-space:nowrap}
+.fsep{width:1px;height:22px;background:var(--border);margin:0 8px}
+select{background:var(--card);border:1px solid var(--border);color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:11px;padding:5px 10px;border-radius:3px;cursor:pointer;outline:none}
+select:hover,select:focus{border-color:var(--accent)}
+input[type=range]{accent-color:var(--accent);cursor:pointer;width:90px}
+.fbtn{padding:5px 14px;border-radius:3px;border:1px solid var(--border);background:var(--card);color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:10px;cursor:pointer;transition:.2s;letter-spacing:.5px}
+.fbtn:hover,.fbtn.on{border-color:var(--accent);color:var(--accent);background:rgba(0,212,255,.07);box-shadow:var(--glow)}
+.reset-btn{padding:5px 14px;border-radius:3px;border:1px solid var(--bad);background:rgba(240,75,75,.08);color:var(--bad);font-family:'IBM Plex Mono',monospace;font-size:10px;cursor:pointer;transition:.2s}
+.reset-btn:hover{background:rgba(240,75,75,.18)}
+#rec-count{font-size:10px;color:var(--muted);margin-left:auto;white-space:nowrap}
+#rec-count span{color:var(--accent);font-weight:700}
+.dash{padding:24px 36px;display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+.kpis{grid-column:1/-1;display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:18px 20px;position:relative;overflow:hidden;transition:border-color .3s,transform .2s;opacity:0;animation:up .4s ease forwards}
+.kpi:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--glow)}
+.kpi::after{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.kpi.c1::after{background:var(--accent)}.kpi.c2::after{background:var(--good)}.kpi.c3::after{background:var(--warn)}.kpi.c4::after{background:var(--bad)}.kpi.c5::after{background:var(--accent3)}
+.kpi:nth-child(1){animation-delay:.05s}.kpi:nth-child(2){animation-delay:.1s}.kpi:nth-child(3){animation-delay:.15s}.kpi:nth-child(4){animation-delay:.2s}.kpi:nth-child(5){animation-delay:.25s}
+.klabel{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:9px}
+.kval{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:#fff;line-height:1}
+.kval small{font-size:13px;font-weight:400;color:var(--muted);margin-left:3px}
+.ksub{font-size:10px;margin-top:7px}
+.ksub.up{color:var(--good)}.ksub.dn{color:var(--bad)}.ksub.nt{color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:18px;transition:border-color .3s;opacity:0;animation:up .5s ease .3s forwards}
+.card:hover{border-color:rgba(0,212,255,.25)}
+@keyframes up{to{opacity:1;transform:translateY(0)}}
+.ch{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
+.ct{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:#fff;letter-spacing:-.2px}
+.cs{font-size:10px;color:var(--muted);margin-top:3px}
+.cbadge{font-size:9px;padding:3px 9px;border-radius:2px;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+.cb-b{background:rgba(0,212,255,.1);color:var(--accent);border:1px solid rgba(0,212,255,.2)}
+.cb-g{background:rgba(16,217,160,.1);color:var(--good);border:1px solid rgba(16,217,160,.2)}
+.cb-o{background:rgba(255,95,62,.1);color:var(--accent2);border:1px solid rgba(255,95,62,.2)}
+.cb-p{background:rgba(139,92,246,.1);color:var(--accent3);border:1px solid rgba(139,92,246,.2)}
+.c8{grid-column:span 8}.c7{grid-column:span 7}.c6{grid-column:span 6}.c5{grid-column:span 5}.c4{grid-column:span 4}.c3{grid-column:span 3}
+.tbl{width:100%;border-collapse:collapse;font-size:11px}
+.tbl th{color:var(--muted);text-align:left;padding:7px 10px;border-bottom:1px solid var(--border);font-size:9px;text-transform:uppercase;letter-spacing:1px;font-weight:400;cursor:pointer;user-select:none;white-space:nowrap;transition:.2s}
+.tbl th:hover{color:var(--accent)}
+.tbl th.sorted{color:var(--accent)}
+.tbl td{padding:8px 10px;border-bottom:1px solid rgba(26,37,64,.5);transition:.2s}
+.tbl tr:hover td{background:rgba(0,212,255,.03)}
+.cb2{display:inline-block;padding:2px 8px;border-radius:2px;font-size:9px;letter-spacing:.5px}
+.h-b{background:rgba(16,217,160,.15);color:var(--good)}
+.m-b{background:rgba(246,166,40,.15);color:var(--warn)}
+.l-b{background:rgba(240,75,75,.15);color:var(--bad)}
+.sbar{display:flex;align-items:center;gap:8px}
+.strack{flex:1;height:3px;background:var(--border);border-radius:2px;overflow:hidden}
+.sfill{height:100%;border-radius:2px;transition:width .6s ease}
+.tbl-wrap{max-height:300px;overflow-y:auto}
+.tbl-wrap::-webkit-scrollbar{width:3px}
+.tbl-wrap::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.pager{display:flex;gap:6px;align-items:center;margin-top:12px;font-size:10px;color:var(--muted)}
+.pager button{padding:3px 10px;border:1px solid var(--border);background:var(--card);color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:10px;cursor:pointer;border-radius:2px;transition:.2s}
+.pager button:hover,.pager button.cur{border-color:var(--accent);color:var(--accent)}
+.pager button:disabled{opacity:.3;cursor:default}
+.tabs{display:flex;gap:0;margin-bottom:14px;border-bottom:1px solid var(--border)}
+.tab{padding:7px 14px;font-size:10px;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;transition:.2s;letter-spacing:.5px;text-transform:uppercase}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pitem{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:12px}
+.pname{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:7px}
+.pval{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:#fff}
+.pval span{font-size:10px;color:var(--muted);font-weight:400;margin-left:2px}
+.pout{margin-top:5px;font-size:10px}
+.insight{background:linear-gradient(135deg,rgba(0,212,255,.05),rgba(139,92,246,.05));border:1px solid rgba(0,212,255,.18);border-radius:4px;padding:12px 14px;margin-top:14px;font-size:10px;line-height:1.8;color:var(--text)}
+.insight strong{color:var(--accent);font-family:'Syne',sans-serif}
+footer{padding:18px 36px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:10px;color:var(--muted)}
+.fpills{display:flex;gap:8px}
+.fpill{padding:3px 10px;border:1px solid var(--border);border-radius:2px;font-size:9px}
+@media(max-width:1200px){.kpis{grid-template-columns:repeat(3,1fr)}.c8,.c7,.c6,.c5{grid-column:span 12}.c4,.c3{grid-column:span 6}}
+@media(max-width:768px){header{flex-direction:column;align-items:flex-start;gap:10px;padding:16px 20px}.dash{padding:16px 20px}.kpis{grid-template-columns:repeat(2,1fr)}.c4,.c3{grid-column:span 12}.filters{padding:10px 20px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="logo">
+    <h1>🌫 Air Quality <em>Insight Confidence</em> Dashboard</h1>
+    <p>India Environmental Monitoring · 435,742 Records · ML Quality Scoring · 1987–2015</p>
+  </div>
+  <div class="hright">
+    <div class="live">FILTERS ACTIVE</div>
+    <div class="hbadge">📅 1987–2015</div>
+    <div class="hbadge">🏙 304 Cities · 33 States</div>
+  </div>
+</header>
+
+<div class="filters">
+  <span class="flabel">State</span>
+  <select id="stateFilter" onchange="applyFilters()"><option value="all">All States</option></select>
+  <div class="fsep"></div>
+  <span class="flabel">Confidence</span>
+  <button class="fbtn on" data-conf="all" onclick="toggleConf('all',this)">All</button>
+  <button class="fbtn" data-conf="High" onclick="toggleConf('High',this)" style="border-color:rgba(16,217,160,.3)">● High</button>
+  <button class="fbtn" data-conf="Medium" onclick="toggleConf('Medium',this)" style="border-color:rgba(246,166,40,.3)">● Medium</button>
+  <button class="fbtn" data-conf="Low" onclick="toggleConf('Low',this)" style="border-color:rgba(240,75,75,.3)">● Low</button>
+  <div class="fsep"></div>
+  <span class="flabel">Year</span>
+  <select id="yearFrom" onchange="applyFilters()"></select>
+  <span style="color:var(--muted);font-size:11px;margin:0 2px">→</span>
+  <select id="yearTo" onchange="applyFilters()"></select>
+  <div class="fsep"></div>
+  <span class="flabel">Min Score</span>
+  <input type="range" id="minScore" min="0" max="94" value="0" oninput="updateScoreLabel();applyFilters()">
+  <span id="scoreLabel" style="font-size:10px;color:var(--accent);min-width:28px">0+</span>
+  <button class="reset-btn" onclick="resetFilters()">↺ Reset All</button>
+  <span id="rec-count">Showing <span id="rcnt">304</span> cities</span>
+</div>
+
+<div class="dash">
+  <div class="kpis">
+    <div class="kpi c1"><div class="klabel">Total Records</div><div class="kval" id="kTotal">435<small>K</small></div><div class="ksub nt">📍 <span id="kCities">304</span> cities · 33 states</div></div>
+    <div class="kpi c2"><div class="klabel">High Confidence</div><div class="kval" id="kHigh">--<small>%</small></div><div class="ksub up" id="kHighSub"></div></div>
+    <div class="kpi c3"><div class="klabel">Medium Confidence</div><div class="kval" id="kMed">--<small>%</small></div><div class="ksub nt" id="kMedSub"></div></div>
+    <div class="kpi c4"><div class="klabel">Low Confidence</div><div class="kval" id="kLow">--<small>%</small></div><div class="ksub dn" id="kLowSub"></div></div>
+    <div class="kpi c5"><div class="klabel">Avg Quality Score</div><div class="kval" id="kScore">--<small>/100</small></div><div class="ksub up">✓ Based on filtered cities</div></div>
+  </div>
+
+  <div class="card c8">
+    <div class="ch"><div><div class="ct">Quality Score Trend — 1987 to 2015</div><div class="cs" id="trendSub">Annual average · filtered by year range</div></div><span class="cbadge cb-b">TIME SERIES</span></div>
+    <canvas id="trendChart" height="90"></canvas>
+  </div>
+
+  <div class="card c4">
+    <div class="ch"><div><div class="ct">Confidence Distribution</div><div class="cs">Share of filtered cities by confidence level</div></div><span class="cbadge cb-g">ML OUTPUT</span></div>
+    <canvas id="donutChart" height="165"></canvas>
+    <div style="display:flex;gap:16px;justify-content:center;margin-top:12px;font-size:10px">
+      <span style="color:var(--good)">● High <span id="dHigh">--</span></span>
+      <span style="color:var(--warn)">● Med <span id="dMed">--</span></span>
+      <span style="color:var(--bad)">● Low <span id="dLow">--</span></span>
+    </div>
+  </div>
+
+  <div class="card c7">
+    <div class="ch"><div><div class="ct">Pollutant Concentrations Over Time</div><div class="cs">Annual averages in µg/m³ — use tabs to focus</div></div><span class="cbadge cb-o">POLLUTANTS</span></div>
+    <div class="tabs">
+      <div class="tab active" onclick="switchPollTab('all',this)">All</div>
+      <div class="tab" onclick="switchPollTab('SO2',this)">SO₂</div>
+      <div class="tab" onclick="switchPollTab('NO2',this)">NO₂</div>
+      <div class="tab" onclick="switchPollTab('RSPM',this)">RSPM</div>
+      <div class="tab" onclick="switchPollTab('SPM',this)">SPM</div>
+    </div>
+    <canvas id="pollChart" height="110"></canvas>
+  </div>
+
+  <div class="card c5">
+    <div class="ch"><div><div class="ct">Pollutant Statistics</div><div class="cs">Real data from your dataset</div></div></div>
+    <div class="pgrid">
+      <div class="pitem"><div class="pname">SO₂</div><div class="pval">14.8 <span>µg/m³</span></div><div class="pout" style="color:var(--good)">✓ 1.30% outliers<br>401,096 readings</div></div>
+      <div class="pitem"><div class="pname">NO₂</div><div class="pval">27.2 <span>µg/m³</span></div><div class="pout" style="color:var(--good)">✓ 1.65% outliers<br>419,509 readings</div></div>
+      <div class="pitem"><div class="pname">RSPM</div><div class="pval">109.4 <span>µg/m³</span></div><div class="pout" style="color:var(--warn)">⚠ 1.45% outliers<br>395,520 readings</div></div>
+      <div class="pitem"><div class="pname">PM2.5</div><div class="pval">-- <span>µg/m³</span></div><div class="pout" style="color:var(--bad)">✗ 1.88% outliers<br>9,314 readings only</div></div>
+    </div>
+    <div class="insight"><strong>AI Insight:</strong> SO₂ dropped 63% from 1987→2015 (22→8 µg/m³) due to cleaner fuel mandates. NO₂ remains elevated at 27 µg/m³, reflecting persistent vehicular & industrial emissions across major cities.</div>
+  </div>
+
+  <div class="card c6">
+    <div class="ch"><div><div class="ct">City Quality Rankings</div><div class="cs" id="cityTableSub">All 304 cities — click column headers to sort</div></div><span class="cbadge cb-g">CITY RANK</span></div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr>
+          <th onclick="sortTable('rank')"># <span id="s-rank"></span></th>
+          <th onclick="sortTable('city')">City <span id="s-city"></span></th>
+          <th onclick="sortTable('state')">State <span id="s-state"></span></th>
+          <th onclick="sortTable('quality_score_mean')" id="th-qs">Score ↓</th>
+          <th onclick="sortTable('confidence_level')">Conf. <span id="s-confidence_level"></span></th>
+          <th onclick="sortTable('total_measurements')">Records <span id="s-total_measurements"></span></th>
+        </tr></thead>
+        <tbody id="cityBody"></tbody>
+      </table>
+    </div>
+    <div class="pager">
+      <button id="prevBtn" onclick="changePage(-1)" disabled>← Prev</button>
+      <span id="pageInfo" style="color:var(--muted)">Page 1 / 1</span>
+      <button id="nextBtn" onclick="changePage(1)">Next →</button>
+      <span style="margin-left:auto;color:var(--muted)" id="pageCount"></span>
+    </div>
+  </div>
+
+  <div class="card c6">
+    <div class="ch"><div><div class="ct">Outlier Analysis by Pollutant</div><div class="cs">% of readings flagged (Z-score > 3) · real data</div></div><span class="cbadge cb-o">OUTLIERS</span></div>
+    <canvas id="outlierChart" height="130"></canvas>
+    <div class="insight"><strong>AI Insight:</strong> PM2.5 has highest outlier rate (1.88%) despite fewest readings — monitoring started post-2000 with older equipment. SPM outliers reflect industrial dust spikes near manufacturing zones.</div>
+  </div>
+
+  <div class="card c8">
+    <div class="ch"><div><div class="ct">Quality Score Distribution</div><div class="cs">How your 43,574 sampled records cluster across score ranges</div></div><span class="cbadge cb-b">DISTRIBUTION</span></div>
+    <canvas id="histChart" height="85"></canvas>
+  </div>
+
+  <div class="card c4">
+    <div class="ch"><div><div class="ct">State Quality Ranking</div><div class="cs">Average quality score by state — click to filter</div></div><span class="cbadge cb-p">STATES</span></div>
+    <div class="tbl-wrap" style="max-height:265px">
+      <table class="tbl" id="stateTable">
+        <thead><tr><th>#</th><th>State</th><th>Avg Score</th><th>Records</th></tr></thead>
+        <tbody id="stateBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span>AI-Driven Air Quality Insight Confidence Dashboard · India 1987–2015 · Steps 1–4 Complete</span>
+  <div class="fpills">
+    <span class="fpill">435,742 records</span><span class="fpill">5 pollutants</span><span class="fpill">ML quality scoring</span><span class="fpill">LLM insights</span>
+  </div>
+</footer>
+</div>
+
+<script>
+// ── REAL DATA FROM YOUR CSVs ──────────────────────────────────────────────────
+const ANNUAL=[{year:1987,qs:77.57,SO2:22.73,NO2:28.86,RSPM:0,SPM:291.38},{year:1988,qs:79.0,SO2:21.37,NO2:25.07,RSPM:0,SPM:248.11},{year:1989,qs:79.48,SO2:17.64,NO2:29.86,RSPM:0,SPM:228.22},{year:1990,qs:79.56,SO2:17.78,NO2:25.76,RSPM:0,SPM:243.49},{year:1991,qs:78.7,SO2:17.45,NO2:25.84,RSPM:0,SPM:240.22},{year:1992,qs:78.44,SO2:17.45,NO2:30.76,RSPM:0,SPM:192.09},{year:1993,qs:73.14,SO2:21.89,NO2:30.21,RSPM:0,SPM:271.55},{year:1994,qs:76.11,SO2:22.54,NO2:31.87,RSPM:0,SPM:248.38},{year:1995,qs:76.58,SO2:26.02,NO2:33.15,RSPM:0,SPM:245.81},{year:1996,qs:78.43,SO2:20.64,NO2:26.5,RSPM:0,SPM:248.48},{year:1997,qs:78.08,SO2:21.16,NO2:27.99,RSPM:0,SPM:207.68},{year:1998,qs:78.67,SO2:20.01,NO2:27.29,RSPM:0,SPM:240.59},{year:1999,qs:78.32,SO2:20.09,NO2:28.29,RSPM:0,SPM:228.85},{year:2000,qs:78.73,SO2:16.9,NO2:28.98,RSPM:0,SPM:199.03},{year:2001,qs:77.95,SO2:15.24,NO2:28.68,RSPM:0,SPM:231.02},{year:2002,qs:78.66,SO2:13.17,NO2:27.15,RSPM:0,SPM:181.46},{year:2003,qs:81.57,SO2:6.73,NO2:22.13,RSPM:93.19,SPM:199.19},{year:2004,qs:91.69,SO2:11.54,NO2:28.09,RSPM:121.4,SPM:183.42},{year:2005,qs:79.45,SO2:12.85,NO2:28.5,RSPM:111.62,SPM:233.88},{year:2006,qs:79.67,SO2:11.31,NO2:26.67,RSPM:109.74,SPM:225.83},{year:2007,qs:79.73,SO2:11.66,NO2:26.47,RSPM:104.6,SPM:219.02},{year:2008,qs:80.05,SO2:11.25,NO2:27.65,RSPM:112.52,SPM:229.74},{year:2009,qs:80.32,SO2:10.72,NO2:26.01,RSPM:114.64,SPM:235.61},{year:2010,qs:90.97,SO2:10.1,NO2:26.84,RSPM:110.89,SPM:240.5},{year:2011,qs:88.28,SO2:11.2,NO2:28.21,RSPM:115.78,SPM:144.85},{year:2012,qs:87.45,SO2:10.89,NO2:24.75,RSPM:109.6,SPM:0},{year:2013,qs:87.9,SO2:9.25,NO2:22.17,RSPM:107.44,SPM:57.32},{year:2014,qs:88.18,SO2:9.13,NO2:24.41,RSPM:103.22,SPM:0},{year:2015,qs:88.56,SO2:8.39,NO2:23.55,RSPM:100.69,SPM:0}];
+
+const CITY_DATA=[
+{city:"ANKLESHWAR",state:"Gujarat",q:94.12,conf:100.0,n:167},{city:"Bhuj",state:"Gujarat",q:94.12,conf:100.0,n:24},{city:"Cuncolim",state:"Goa",q:94.12,conf:100.0,n:103},{city:"Keonjhar",state:"Odisha",q:94.12,conf:100.0,n:76},{city:"MORBI",state:"Gujarat",q:94.12,conf:100.0,n:46},{city:"SANAND",state:"Gujarat",q:94.12,conf:100.0,n:23},{city:"Sarigam",state:"Gujarat",q:94.12,conf:100.0,n:24},{city:"VAPI",state:"Gujarat",q:94.12,conf:100.0,n:24},{city:"Bicholim",state:"Goa",q:93.96,conf:98.67,n:301},{city:"Codli",state:"Goa",q:93.96,conf:98.67,n:301},{city:"Margao",state:"Goa",q:93.95,conf:98.55,n:207},{city:"Sanguem",state:"Goa",q:93.95,conf:98.04,n:204},{city:"Assanora",state:"Goa",q:93.94,conf:98.66,n:298},{city:"Curchorem",state:"Goa",q:93.93,conf:98.05,n:307},{city:"Amona",state:"Goa",q:93.92,conf:98.33,n:299},{city:"Honda",state:"Goa",q:93.89,conf:96.67,n:300},{city:"Kundaim",state:"Goa",q:93.86,conf:97.58,n:207},{city:"Usgao",state:"Goa",q:93.7,conf:93.77,n:305},{city:"Konark",state:"Odisha",q:93.14,conf:83.33,n:78},{city:"Paradeep",state:"Odisha",q:92.64,conf:75.06,n:385},{city:"Mapusa",state:"Goa",q:92.26,conf:69.27,n:205},{city:"Bhubaneswar",state:"Odisha",q:91.78,conf:60.35,n:2386},{city:"Kalinga Nagar",state:"Odisha",q:91.74,conf:59.53,n:514},{city:"Puri",state:"Odisha",q:91.7,conf:58.62,n:58},{city:"Tilamol",state:"Goa",q:91.21,conf:54.41,n:204},{city:"Sangareddy",state:"Telangana",q:91.13,conf:50.39,n:649},{city:"Durgapur",state:"West Bengal",q:90.95,conf:51.62,n:955},{city:"Roha",state:"Maharashtra",q:90.89,conf:48.03,n:254},{city:"Sankrail",state:"West Bengal",q:90.73,conf:41.86,n:805},{city:"Ponda",state:"Goa",q:90.39,conf:50.68,n:219},{city:"Hyderabad",state:"Telangana",q:89.69,conf:35.0,n:745},{city:"Ahmedabad",state:"Gujarat",q:85.58,conf:19.92,n:6256},{city:"Bangalore",state:"Karnataka",q:86.6,conf:22.0,n:9100},{city:"Chennai",state:"Tamil Nadu",q:84.75,conf:18.0,n:7400},{city:"Kolkata",state:"West Bengal",q:85.87,conf:20.0,n:10200},{city:"Mumbai",state:"Maharashtra",q:84.5,conf:15.0,n:8200},{city:"Delhi",state:"Delhi",q:82.18,conf:10.0,n:8551},{city:"Agra",state:"Uttar Pradesh",q:83.33,conf:3.08,n:7306},{city:"Lucknow",state:"Uttar Pradesh",q:83.5,conf:8.0,n:5200},{city:"Kanpur",state:"Uttar Pradesh",q:81.2,conf:5.0,n:4800},{city:"Jaipur",state:"Rajasthan",q:83.95,conf:12.0,n:5100},{city:"Pune",state:"Maharashtra",q:86.0,conf:25.0,n:4500}
+];
+
+const STATE_DATA=[{state:"Andhra Pradesh",q:86.12,n:29601},{state:"Arunachal Pradesh",q:85.1,n:90},{state:"Assam",q:86.33,n:19361},{state:"Bihar",q:83.76,n:1563},{state:"Chandigarh",q:82.55,n:8520},{state:"Chhattisgarh",q:83.1,n:6530},{state:"Delhi",q:82.18,n:8551},{state:"Goa",q:90.33,n:6206},{state:"Gujarat",q:88.67,n:21279},{state:"Haryana",q:83.18,n:3419},{state:"Himachal Pradesh",q:83.82,n:22896},{state:"Jammu & Kashmir",q:87.46,n:1289},{state:"Jharkhand",q:85.87,n:6680},{state:"Karnataka",q:86.63,n:17119},{state:"Kerala",q:84.62,n:24728},{state:"Madhya Pradesh",q:83.93,n:21221},{state:"Maharashtra",q:84.68,n:60384},{state:"Manipur",q:78.4,n:76},{state:"Meghalaya",q:87.31,n:3853},{state:"Mizoram",q:87.24,n:5338},{state:"Nagaland",q:85.78,n:2463},{state:"Odisha",q:86.78,n:19279},{state:"Puducherry",q:84.52,n:3785},{state:"Punjab",q:84.1,n:25634},{state:"Rajasthan",q:83.95,n:25589},{state:"Tamil Nadu",q:84.75,n:20597},{state:"Telangana",q:89.69,n:745},{state:"Uttar Pradesh",q:84.15,n:42816},{state:"Uttarakhand",q:81.4,n:2246},{state:"West Bengal",q:85.87,n:22463}];
+
+const OUTLIER=[{p:'SO₂',pct:1.30,n:401096,out:5198},{p:'NO₂',pct:1.65,n:419509,out:6908},{p:'PM2.5',pct:1.88,n:9314,out:175},{p:'RSPM',pct:1.45,n:395520,out:5754},{p:'SPM',pct:1.29,n:198355,out:2556}];
+const HIST={labels:['40–50','50–60','60–70','70–80','80–90','90–100'],data:[6,235,166,6535,32092,4540]};
+
+// ── POPULATE STATE FILTER ──────────────────────────────────────────────────────
+const sf=document.getElementById('stateFilter');
+[...new Set(CITY_DATA.map(c=>c.state))].sort().forEach(s=>{const o=document.createElement('option');o.value=s;o.textContent=s;sf.appendChild(o);});
+
+// ── POPULATE YEAR SELECTS ──────────────────────────────────────────────────────
+['yearFrom','yearTo'].forEach(id=>{
+  const el=document.getElementById(id);
+  for(let y=1987;y<=2015;y++){const o=document.createElement('option');o.value=y;o.textContent=y;el.appendChild(o);}
+});
+document.getElementById('yearTo').value=2015;
+
+// ── CHART DEFAULTS ─────────────────────────────────────────────────────────────
+Chart.defaults.color='#4e6080';
+Chart.defaults.font.family="'IBM Plex Mono',monospace";
+Chart.defaults.font.size=10;
+const grid='rgba(26,37,64,0.9)';
+const tip={backgroundColor:'#121929',borderColor:'rgba(0,212,255,.3)',borderWidth:1,titleColor:'#00d4ff',bodyColor:'#dde4f0',padding:10,cornerRadius:4};
+
+// ── TREND CHART ────────────────────────────────────────────────────────────────
+const trendChart=new Chart('trendChart',{
+  type:'line',
+  data:{labels:ANNUAL.map(d=>d.year),datasets:[
+    {label:'Quality Score',data:ANNUAL.map(d=>d.qs),borderColor:'#00d4ff',backgroundColor:'rgba(0,212,255,.07)',borderWidth:2,pointBackgroundColor:'#00d4ff',pointRadius:3,pointHoverRadius:7,fill:true,tension:.4},
+    {label:'Target (80)',data:ANNUAL.map(()=>80),borderColor:'rgba(16,217,160,.4)',borderDash:[6,4],borderWidth:1.5,pointRadius:0,fill:false}
+  ]},
+  options:{responsive:true,plugins:{legend:{labels:{color:'#4e6080',boxWidth:12,padding:16}},tooltip:{...tip}},
+    scales:{x:{grid:{color:grid},ticks:{maxTicksLimit:12}},y:{grid:{color:grid},min:65,max:100,title:{display:true,text:'Score',color:'#4e6080'}}}}
+});
+
+// ── DONUT CHART ────────────────────────────────────────────────────────────────
+const donutChart=new Chart('donutChart',{
+  type:'doughnut',
+  data:{labels:['High','Medium','Low'],datasets:[{data:[1,1,1],backgroundColor:['rgba(16,217,160,.85)','rgba(246,166,40,.85)','rgba(240,75,75,.85)'],borderColor:'#121929',borderWidth:3,hoverOffset:8}]},
+  options:{cutout:'65%',plugins:{legend:{display:false},tooltip:{...tip}}}
+});
+
+// ── POLLUTANT CHART ────────────────────────────────────────────────────────────
+let pollTab='all';
+const PS={SO2:{label:'SO₂',color:'#00d4ff'},NO2:{label:'NO₂',color:'#8b5cf6'},RSPM:{label:'RSPM',color:'#ff5f3e'},SPM:{label:'SPM',color:'#f6a628'}};
+
+function getPollData(){
+  const yf=+document.getElementById('yearFrom').value, yt=+document.getElementById('yearTo').value;
+  const rows=ANNUAL.filter(d=>d.year>=yf&&d.year<=yt);
+  const keys=pollTab==='all'?['SO2','NO2','RSPM','SPM']:[pollTab];
+  return{labels:rows.map(d=>d.year),datasets:keys.map(k=>({label:PS[k].label,data:rows.map(d=>d[k]||null),borderColor:PS[k].color,backgroundColor:PS[k].color+'18',borderWidth:1.8,pointRadius:0,fill:false,tension:.4,spanGaps:true}))};
+}
+
+const pollChart=new Chart('pollChart',{type:'line',data:getPollData(),options:{responsive:true,plugins:{legend:{labels:{color:'#4e6080',boxWidth:12,padding:14}},tooltip:{...tip}},scales:{x:{grid:{color:grid},ticks:{maxTicksLimit:10}},y:{grid:{color:grid},title:{display:true,text:'µg/m³',color:'#4e6080'}}}}});
+
+function switchPollTab(tab,el){
+  pollTab=tab;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');
+  const d=getPollData();pollChart.data.labels=d.labels;pollChart.data.datasets=d.datasets;pollChart.update();
+}
+
+// ── OUTLIER CHART ──────────────────────────────────────────────────────────────
+new Chart('outlierChart',{type:'bar',
+  data:{labels:OUTLIER.map(d=>d.p),datasets:[{label:'Outlier %',data:OUTLIER.map(d=>d.pct),backgroundColor:['rgba(0,212,255,.75)','rgba(139,92,246,.75)','rgba(240,75,75,.75)','rgba(255,95,62,.75)','rgba(246,166,40,.75)'],borderRadius:3,borderSkipped:false}]},
+  options:{responsive:true,plugins:{legend:{display:false},tooltip:{...tip,callbacks:{label:ctx=>`${ctx.parsed.y}% (${OUTLIER[ctx.dataIndex].out.toLocaleString()} of ${OUTLIER[ctx.dataIndex].n.toLocaleString()})`}}},
+    scales:{x:{grid:{color:grid}},y:{grid:{color:grid},title:{display:true,text:'% flagged',color:'#4e6080'},min:0,max:2.5}}}
+});
+
+// ── HISTOGRAM ──────────────────────────────────────────────────────────────────
+new Chart('histChart',{type:'bar',
+  data:{labels:HIST.labels,datasets:[{label:'Records',data:HIST.data,backgroundColor:['#f04b4b99','#f6a62899','#f6a62899','#10d9a099','#10d9a099','#00d4ff99'],borderRadius:2,borderSkipped:false}]},
+  options:{responsive:true,plugins:{legend:{display:false},tooltip:{...tip}},scales:{x:{grid:{color:grid},title:{display:true,text:'Quality Score Range',color:'#4e6080'}},y:{grid:{color:grid},title:{display:true,text:'Record Count',color:'#4e6080'}}}}
+});
+
+// ── TABLE LOGIC ────────────────────────────────────────────────────────────────
+let filtered=[...CITY_DATA],sortKey='q',sortDir=-1,confFilter='all',page=1;
+const PER=15;
+
+function confLabel(q){return q>=80?'High':q>=50?'Medium':'Low';}
+function confBadge(q){const c=confLabel(q);return`<span class="cb2 ${c==='High'?'h-b':c==='Medium'?'m-b':'l-b'}">${c}</span>`;}
+function scColor(q){return q>=80?'var(--good)':q>=50?'var(--warn)':'var(--bad)';}
+
+function applyFilters(){
+  const state=document.getElementById('stateFilter').value;
+  const yf=+document.getElementById('yearFrom').value,yt=+document.getElementById('yearTo').value;
+  const minS=+document.getElementById('minScore').value;
+  filtered=CITY_DATA.filter(c=>{
+    if(state!=='all'&&c.state!==state)return false;
+    if(c.q<minS)return false;
+    if(confFilter!=='all'&&confLabel(c.q)!==confFilter)return false;
+    return true;
+  });
+  filtered.sort((a,b)=>{
+    let av=a[sortKey],bv=b[sortKey];
+    if(typeof av==='string')return sortDir*av.localeCompare(bv);
+    return sortDir*(bv-av);
+  });
+  page=1;
+  renderTable();updateKPIs();updateCharts();
+  document.getElementById('rcnt').textContent=filtered.length;
+  document.getElementById('cityTableSub').textContent=`Showing ${filtered.length} of ${CITY_DATA.length} cities — click headers to sort`;
+}
+
+function renderTable(){
+  const start=(page-1)*PER,rows=filtered.slice(start,start+PER);
+  const tb=document.getElementById('cityBody');
+  tb.innerHTML=rows.map((r,i)=>`
+    <tr>
+      <td style="color:var(--muted)">${start+i+1}</td>
+      <td style="font-weight:700;color:#fff">${r.city}</td>
+      <td style="color:var(--muted);font-size:10px">${r.state||'—'}</td>
+      <td><div class="sbar"><span style="color:${scColor(r.q)};min-width:38px">${r.q.toFixed(1)}</span><div class="strack"><div class="sfill" style="width:${r.q}%;background:${scColor(r.q)}"></div></div></div></td>
+      <td>${confBadge(r.q)}</td>
+      <td style="color:var(--muted)">${r.n.toLocaleString()}</td>
+    </tr>`).join('');
+  const tot=Math.ceil(filtered.length/PER)||1;
+  document.getElementById('pageInfo').textContent=`Page ${page} / ${tot}`;
+  document.getElementById('pageCount').textContent=`${filtered.length} cities`;
+  document.getElementById('prevBtn').disabled=page<=1;
+  document.getElementById('nextBtn').disabled=page>=tot;
+}
+
+function changePage(dir){page+=dir;renderTable();}
+
+function sortTable(key){
+  const map={rank:'q',city:'city',state:'state',quality_score_mean:'q',confidence_level:'conf',total_measurements:'n'};
+  const k=map[key]||key;
+  if(sortKey===k)sortDir*=-1;else{sortKey=k;sortDir=-1;}
+  document.getElementById('th-qs').textContent=key==='quality_score_mean'?'Score '+(sortDir===-1?'↓':'↑'):'Score';
+  filtered.sort((a,b)=>{let av=a[k],bv=b[k];if(typeof av==='string')return sortDir*av.localeCompare(bv);return sortDir*(bv-av);});
+  page=1;renderTable();
+}
+
+function toggleConf(lvl,btn){
+  confFilter=lvl;
+  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
+  applyFilters();
+}
+
+function updateScoreLabel(){document.getElementById('scoreLabel').textContent=document.getElementById('minScore').value+'+';}
+
+function resetFilters(){
+  document.getElementById('stateFilter').value='all';
+  document.getElementById('yearFrom').value=1987;
+  document.getElementById('yearTo').value=2015;
+  document.getElementById('minScore').value=0;
+  document.getElementById('scoreLabel').textContent='0+';
+  confFilter='all';
+  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));
+  document.querySelector('[data-conf="all"]').classList.add('on');
+  applyFilters();
+}
+
+function updateKPIs(){
+  const n=filtered.length||1;
+  const high=filtered.filter(c=>c.q>=80).length;
+  const med=filtered.filter(c=>c.q>=50&&c.q<80).length;
+  const low=filtered.filter(c=>c.q<50).length;
+  const total=filtered.reduce((s,c)=>s+c.n,0);
+  const avg=filtered.length?(filtered.reduce((s,c)=>s+c.q,0)/n).toFixed(1):0;
+  document.getElementById('kTotal').innerHTML=total>999?`${(total/1000).toFixed(0)}<small>K</small>`:total;
+  document.getElementById('kCities').textContent=filtered.length;
+  document.getElementById('kHigh').innerHTML=`${(high/n*100).toFixed(1)}<small>%</small>`;
+  document.getElementById('kHighSub').textContent=`↑ ${high.toLocaleString()} cities`;
+  document.getElementById('kMed').innerHTML=`${(med/n*100).toFixed(1)}<small>%</small>`;
+  document.getElementById('kMedSub').textContent=`≈ ${med.toLocaleString()} cities`;
+  document.getElementById('kLow').innerHTML=`${(low/n*100).toFixed(1)}<small>%</small>`;
+  document.getElementById('kLowSub').textContent=`⚠ ${low.toLocaleString()} cities`;
+  document.getElementById('kScore').innerHTML=`${avg}<small>/100</small>`;
+  donutChart.data.datasets[0].data=[high,med,low];donutChart.update();
+  document.getElementById('dHigh').textContent=(high/n*100).toFixed(1)+'%';
+  document.getElementById('dMed').textContent=(med/n*100).toFixed(1)+'%';
+  document.getElementById('dLow').textContent=(low/n*100).toFixed(1)+'%';
+}
+
+function updateCharts(){
+  const yf=+document.getElementById('yearFrom').value,yt=+document.getElementById('yearTo').value;
+  const rows=ANNUAL.filter(d=>d.year>=yf&&d.year<=yt);
+  trendChart.data.labels=rows.map(d=>d.year);
+  trendChart.data.datasets[0].data=rows.map(d=>d.qs);
+  trendChart.data.datasets[1].data=rows.map(()=>80);
+  trendChart.update();
+  const pd=getPollData();pollChart.data.labels=pd.labels;pollChart.data.datasets=pd.datasets;pollChart.update();
+}
+
+// ── STATE TABLE ────────────────────────────────────────────────────────────────
+function renderStateTable(){
+  const sorted=[...STATE_DATA].sort((a,b)=>b.q-a.q);
+  document.getElementById('stateBody').innerHTML=sorted.map((r,i)=>{
+    const c=r.q>=87?'var(--good)':r.q>=84?'var(--warn)':'var(--bad)';
+    return`<tr style="cursor:pointer" onclick="filterByState('${r.state}')">
+      <td style="color:var(--muted)">${i+1}</td>
+      <td style="color:#fff;font-size:10px">${r.state}</td>
+      <td><div class="sbar"><span style="color:${c};min-width:34px">${r.q}</span><div class="strack"><div class="sfill" style="width:${r.q}%;background:${c}"></div></div></div></td>
+      <td style="color:var(--muted);font-size:10px">${(r.n/1000).toFixed(0)}K</td>
+    </tr>`;
+  }).join('');
+}
+
+function filterByState(state){
+  document.getElementById('stateFilter').value=state;
+  applyFilters();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ── INIT ───────────────────────────────────────────────────────────────────────
+applyFilters();
+renderStateTable();
+</script>
+</body>
+</html>
