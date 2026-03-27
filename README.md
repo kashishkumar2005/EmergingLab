@@ -71,7 +71,12 @@ Dataset
 * Classify insights as **High**, **Medium**, or **Low Confidence**
 * Based on completeness, consistency, and outlier presence
 
-### 5. Dashboard Visualization
+### 5. LLM Integration
+
+* Integrate Groq API
+* Generate plain-language explanations for data reliability and insight confidence
+
+### 6. Dashboard Visualization(Using PowerBI and Tableau)
 
 * AQI trends by city and time
 * Data Quality Score indicators
@@ -79,10 +84,7 @@ Dataset
 * Outlier distribution charts
 * Interactive filters (city, date range)
 
-### 6. LLM Integration
 
-* Integrate Hugging Face Inference API
-* Generate plain-language explanations for data reliability and insight confidence
 
 
 
