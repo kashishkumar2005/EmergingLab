@@ -1,7 +1,5 @@
 # AI-Driven Air Quality Insight Confidence Dashboard
 
-
-
 ## Overview
 
 This project presents an **AI-assisted analytics dashboard** that goes beyond traditional air quality visualization by **assessing data quality**, **assigning confidence levels to insights**, and **generating human-readable explanations** using a Large Language Model (LLM).
@@ -21,7 +19,7 @@ The system helps users understand not only *what* the air quality trends are, bu
 ##  Dataset
 
 * **Name:** Air Quality Data in India
-* **Source:** Government Open Data / Kaggle (CPCB)
+* **Source:** Kaggle (CPCB)
 * **Format:** CSV
 
 ### Features
